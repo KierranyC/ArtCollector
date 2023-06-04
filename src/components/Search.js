@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { 
   fetchAllCenturies,
   fetchAllClassifications,
+  fetchAllMediums,
   fetchQueryResults
 } from '../api';
 
@@ -25,9 +26,11 @@ const Search = ({ setIsLoading, setSearchResults }) => {
    */
   const [centuryList, setCenturyList] = useState([])
   const [classificationList, setClassificationList] = useState([])
+  const [medium, setMedium] = useState('any');
   const [queryString, setQueryString] = useState('')
   const [century, setCentury] = useState('any')
   const [classification, setClassification] = useState('any')
+  const [mediumList, setMediumList] = useState([])
 
   /**
    * Inside of useEffect, use Promise.all([]) with fetchAllCenturies and fetchAllClassifications
@@ -37,10 +40,11 @@ const Search = ({ setIsLoading, setSearchResults }) => {
    * Make sure to console.error on caught errors from the API methods.
    */
   useEffect(() => {
-    Promise.all([fetchAllCenturies(), fetchAllClassifications()])
-    .then(([centuryList, classificationList]) => {
+    Promise.all([fetchAllCenturies(), fetchAllClassifications(), fetchAllMediums()])
+    .then(([centuryList, classificationList, mediumList]) => {
       setCenturyList(centuryList)
       setClassificationList(classificationList)
+      setMediumList(mediumList)
     })
     .catch((error) => console.error(error))
   }, []);
@@ -66,7 +70,7 @@ const Search = ({ setIsLoading, setSearchResults }) => {
     setIsLoading(true) 
 
     try {
-      const results = await fetchQueryResults({ century, classification, queryString })
+      const results = await fetchQueryResults({ century, classification, medium, queryString })
       setSearchResults(results) 
     }
     catch (error) {
@@ -105,6 +109,17 @@ const Search = ({ setIsLoading, setSearchResults }) => {
         onChange={(event) => setCentury(event.target.value)}>
         <option value="any">Any</option>
         {centuryList.map((century) => (<option key={century.name} value={century.name}>{century.name}</option>))}
+      </select>
+     </fieldset>
+     <fieldset>
+      <label htmlFor="select-medium">Medium <span className="medium-count">({ mediumList.length })</span></label>
+      <select 
+        name="medium" 
+        id="select-medium"
+        value={medium} 
+        onChange={(event) => setMedium(event.target.value)}>
+        <option value="any">Any</option>
+        {mediumList.map((medium) => (<option key={medium.name} value={medium.name}>{medium.name}</option>))}
       </select>
      </fieldset>
     <button>SEARCH</button>

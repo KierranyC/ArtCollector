@@ -42,10 +42,11 @@ export async function fetchQueryResultsFromURL(url) {
 export async function fetchQueryResults({
   century,
   classification,
+  medium,
   queryString,
 }) {
   const url = `${ BASE_URL }/object?${ KEY }&classification=${ classification }&century=${ 
-    century }&keyword=${ queryString }`;
+    century }&medium=${ medium }&keyword=${ queryString }`;
 
   try {
     const response = await fetch(url);
@@ -100,5 +101,25 @@ export async function fetchAllClassifications() {
     return records;
   } catch (error) {
     throw error;
+  }
+}
+
+export async function fetchAllMediums() {
+  if (localStorage.getItem('medium')) {
+    return JSON.parse(localStorage.getItem('mediums'))
+  }
+  const url = `${ BASE_URL }/medium?${ KEY }&size=100&sort=name`
+
+  try {
+    const response = await fetch(url)
+    const data = await response.json()
+    const records = data.records
+
+    localStorage.setItem('mediums', JSON.stringify(records))
+
+    return records
+  }
+  catch (error) {
+    throw error
   }
 }
