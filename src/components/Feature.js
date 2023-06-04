@@ -84,8 +84,8 @@ const Searchable = ({ searchTerm, searchValue, setIsLoading, setSearchResutls })
  * NOTE: people and images are likely to be arrays, and will need to be mapped over if they exist
  * 
  * This component should be exported as default.
- */
-const Feature = ({ featuredResult }) => {
+ */ 
+const Feature = ({ featuredResult, setIsLoading, setSearchResults }) => {
     if (!featuredResult){
         return (
             <main id="feature"></main>

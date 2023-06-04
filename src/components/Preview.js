@@ -64,7 +64,7 @@ const Preview = ({ setSearchResults, setFeaturedResult, setIsLoading, searchResu
             }
           </div>
         */
-       records.map((record) => {
+       records.map((record, index) => {
        return (
        <div  
        key={ index }
