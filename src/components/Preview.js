@@ -6,7 +6,8 @@ import React from 'react';
  */
 import { fetchQueryResultsFromURL } from '../api';
 
-const Preview = ({ setSearchResults, setFeaturedResult, setIsLoading, searchResults: {info, records} }) => {
+const Preview = ({ setSearchResults, setFeaturedResult, setIsLoading, searchResults : { info, records } }) => {
+  
   /**
    * Destructure setSearchResults, setFeaturedResult, and setIsLoading from props
    * and also destructure info and records from props.searchResults
@@ -79,7 +80,7 @@ const Preview = ({ setSearchResults, setFeaturedResult, setIsLoading, searchResu
        }
        {
          // if the record.title exists, add this: <h3>{ record.title }</h3>, otherwise show this: <h3>MISSING INFO</h3>
-         record.title ? <h3>{ record.title }</h3> : <h3>MISSING INFO</h3> 
+         record.title ? <a href= {`${record.title}`}><h3>{ record.title }</h3></a> : <h3>MISSING INFO</h3> 
        }
      </div>)
       })}

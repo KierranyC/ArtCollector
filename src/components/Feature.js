@@ -29,16 +29,16 @@ import { fetchQueryResultsFromTermAndValue } from '../api';
  * finally:
  *  - call setIsLoading, set it to false
  */
-const Searchable = ({ searchTerm, searchValue, setIsLoading, setSearchResutls }) => {
+const Searchable = ({ searchTerm, searchValue, setIsLoading, setSearchResults }) => {
   return (
      <span className="content">
-     <a href={`${searchTerm}`} onClick={async (event) => {
+     <a href={`${searchValue}`} onClick={async (event) => {
         event.preventDefault()
         setIsLoading(true)
 
         try {
-            const results = fetchQueryResultsFromTermAndValue(searchTerm, searchValue)
-            setSearchResutls(results)
+            const results = await fetchQueryResultsFromTermAndValue(searchTerm, searchValue)
+            setSearchResults(results)
         }
         catch (error) {
             console.error(error)
@@ -46,7 +46,7 @@ const Searchable = ({ searchTerm, searchValue, setIsLoading, setSearchResutls })
         finally {
             setIsLoading(false) 
         }
-        }}>{searchTerm}</a>
+        }}>{searchValue}</a>
      </span> 
   )
 }
