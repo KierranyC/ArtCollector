@@ -93,10 +93,7 @@ const Search = ({ setIsLoading, setSearchResults }) => {
         value={classification} 
         onChange={(event) => setClassification(event.target.value)}>
         <option value="any">Any</option>
-        {classificationList.map((classification) => {
-            (<option key={classification.name} value={classification.name}>{classification.name}</option>)
-        }
-        )}
+        {classificationList.map((classification) => (<option key={classification.name} value={classification.name}>{classification.name}</option>))}
       </select>
     </fieldset>
     <fieldset>
